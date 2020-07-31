@@ -1,0 +1,18 @@
+nginx:
+  build: nginx
+  command: nginx -g "daemon off;"
+  links:
+    - php
+  ports:
+    - "8888:80"
+php:
+  build: php
+  command: php-fpm
+  volumes:
+    - ../:/var/www
+  working_dir: /var/www
+  environment:
+    SYMFONY_APP_PATH: ../
+    TIMEZONE: Europe/Rome
+    XDEBUG_CONFIG: remote_host=host.docker.internal
+    PHP_IDE_CONFIG: serverName=localhost
